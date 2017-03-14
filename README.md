@@ -12,4 +12,4 @@ npm run build // 开发完成之后打包文件（js、css分开打包）
 ```
 
 ### 预览
-[dev](http://localhost:8888)
+[dev](http://localhost:8888) <http://localhost:8888>
