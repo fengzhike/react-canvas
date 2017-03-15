@@ -1,43 +1,7 @@
 'use strict';
-
-
 import React from 'react';
-import ReactDom from 'react-dom';
+import CanvasBtn from './canvasBtn.js'
 
-import { Router, Route, hashHistory } from 'react-router';
-
-// 操作按钮
-var CanvasBtn = React.createClass({
-    clearCanvas:function(){
-        this.props.callbackClear();
-    },
-    revokeCanvas:function(){
-        this.props.callbackRevoke();
-    },
-    saveCanvas:function(){
-        this.props.callbackSave();
-    },
-    render: function () {
-        return (
-            <div>
-                <input className="btn clear" onClick={this.clearCanvas} type="button" value="Clear" />
-                <input className="btn revoke" onClick={this.revokeCanvas} type="button" value="Revoke" />
-                <input className="btn" onClick={this.saveCanvas} type="button" value="PreView" />
-            </div>
-        )
-    }
-})
-
-// 保存预览
-var SaveImg = React.createClass({
-    render: function () {
-        return (
-            <img src={this.props.imgUrl} />
-        )
-    }
-})
-
-// canvas画板
 var CanvasCon = React.createClass({
     arr:[],
     getCanvas:function(){
@@ -46,7 +10,7 @@ var CanvasCon = React.createClass({
             oGC:this.refs.canvas.getContext("2d")
         }
     },
-    getInitialState: function () {
+    getInitialState:function () {
         return {
             x:0,
             y:0,
@@ -60,7 +24,7 @@ var CanvasCon = React.createClass({
             y:event.clientY - this.getCanvas().canvas.offsetTop,
             draw:true
         })
-        
+
         this.getCanvas().oGC.lineWidth = 5;
         this.getCanvas().oGC.strokeStyle = 'red';
         this.getCanvas().oGC.beginPath();
@@ -90,7 +54,7 @@ var CanvasCon = React.createClass({
         if (this.arr.length === 0){
             alert('先画两笔吧 ☺');
             return;
-        } 
+        }
         this.getCanvas().oGC.clearRect(0, 0, this.getCanvas().canvas.offsetWidth, this.getCanvas().canvas.offsetHeight);
         this.setState({
             saveImg:''
@@ -115,8 +79,7 @@ var CanvasCon = React.createClass({
         this.setState({
             saveImg:imgUrl
         })
-
-        location.hash="preview";
+        location.hash="preview:123"
     },
     render: function () {
         return (
@@ -128,11 +91,4 @@ var CanvasCon = React.createClass({
         )
     }
 })
-
-//最终渲染
-ReactDom.render((
-    <Router history={hashHistory}>
-        <Route path='/' component={CanvasCon}></Route>
-        <Route path='/preview' component={SaveImg}></Route>
-    </Router>
-), document.getElementById('app'));
+export default CanvasCon
